@@ -17,21 +17,31 @@ def makeCave(grid):
     x = random.randint(0, rows-1)
     y = random.randint(0, columns-1)
     grid[x][y] = "#"
-    for i in range(20):
+
+    counter = 0
+    while counter != 60:
         ran = random.randint(0,1)
+
         if ran == 0:
-            x = x + random.randint(-1, 1)
-            if x < 0 or x > rows:
-                break
+            newX = x + random.randint(-1, 1)
+            if newX < 0 or newX >= rows:
+                continue
+            else:
+                x = newX
             print(f'X: {x}')
             print(f'Y: {y}')
+
         if ran == 1:
-            y = y + random.randint(-1, 1)
-            if y < 0 or y > rows:
-                break
+            newY = y + random.randint(-1, 1)
+            if newY < 0 or newY >= columns:
+                continue
+            else:
+                y = newY
             print(f'X: {x}')
             print(f'Y: {y}')
+
         grid[x][y] = "#"
+        counter +=1
 
     return grid
 
