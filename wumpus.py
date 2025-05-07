@@ -25,5 +25,19 @@ def main():
         20: [13,16,19]
     }
 
+    go = True
+    while go == True:
+        playerPos = random.randint(1, 20)
+        bat1Pos = random.randint(1, 20)
+        bat2Pos = random.randint(1, 20)
+        wumpusPos = random.randint(1, 20)
+
+        positions = {playerPos, bat1Pos, bat2Pos, wumpusPos}
+        if len(positions) == 4:
+            go = False
+
+
+
+
 
 main()
