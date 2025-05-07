@@ -1,7 +1,10 @@
 import random
 
-def movePlayer():
-    print("E")
+def movePlayer(playerPos, wumpusMap):
+    moveInput = int(input("Where to?"))
+    while moveInput not in wumpusMap[playerPos]:
+        moveInput = int(input("Not possible - Where to?"))
+    return moveInput
 
 def shootArrow():
     print("F")
@@ -47,9 +50,9 @@ def main():
     print("Welcome to Hunt the Wumpus")
 
     playerAlive = True
-
     while playerAlive == True:
         print(f"You are in room {playerPos}")
+        print(f"Tunnels lead to {wumpusMap[playerPos]}")
         playerIn = input("Shoot, Move or Quit (S-M-Q)?")
         if playerIn == "Q":
             playerAlive = False
@@ -57,7 +60,8 @@ def main():
         elif playerIn == "S":
             shootArrow()
         elif playerIn == "M":
-            movePlayer()
+            playerPos = movePlayer(playerPos, wumpusMap)
+            print(playerPos)
         else:
             print("What the sigma!")
 
