@@ -30,12 +30,19 @@ def main():
         playerPos = random.randint(1, 20)
         bat1Pos = random.randint(1, 20)
         bat2Pos = random.randint(1, 20)
+        hole1Pos = random.randint(1, 20)
+        hole2Pos = random.randint(1, 20)
         wumpusPos = random.randint(1, 20)
 
-        positions = {playerPos, bat1Pos, bat2Pos, wumpusPos}
-        if len(positions) == 4:
+        positions = {playerPos, bat1Pos, bat2Pos, hole1Pos, hole2Pos, wumpusPos}
+        if len(positions) == 6:
             go = False
 
+
+
+    playerAlive = True
+
+    while playerAlive == True:
 
 
 
