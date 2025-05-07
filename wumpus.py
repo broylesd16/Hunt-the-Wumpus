@@ -1,5 +1,10 @@
 import random
 
+def movePlayer():
+    print("E")
+
+def shootArrow():
+    print("F")
 
 def main():
     wumpusMap = {
@@ -39,10 +44,22 @@ def main():
             go = False
 
 
+    print("Welcome to Hunt the Wumpus")
 
     playerAlive = True
 
     while playerAlive == True:
+        print(f"You are in room {playerPos}")
+        playerIn = input("Shoot, Move or Quit (S-M-Q)?")
+        if playerIn == "Q":
+            playerAlive = False
+            print("Chicken!")
+        elif playerIn == "S":
+            shootArrow()
+        elif playerIn == "M":
+            movePlayer()
+        else:
+            print("What the sigma!")
 
 
 
