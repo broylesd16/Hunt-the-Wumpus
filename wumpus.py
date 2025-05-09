@@ -9,9 +9,9 @@ def movePlayer(playerPos, wumpusMap, bat1Pos, bat2Pos, hole1Pos, hole2Pos, wumpu
         moveInput = batLogic()
         while moveInput == bat1Pos or moveInput == bat2Pos:
             moveInput = batLogic()
-    elif moveInput == hole1Pos or moveInput == hole2Pos:
+    if moveInput == hole1Pos or moveInput == hole2Pos:
         moveInput = 21
-    elif moveInput == wumpusPos:
+    if moveInput == wumpusPos:
         moveInput = 22
 
 
