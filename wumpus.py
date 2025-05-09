@@ -1,10 +1,39 @@
 import random
 
-def movePlayer(playerPos, wumpusMap):
+def movePlayer(playerPos, wumpusMap, bat1Pos, bat2Pos, hole1Pos, hole2Pos, wumpusPos):
     moveInput = int(input("Where to?"))
     while moveInput not in wumpusMap[playerPos]:
         moveInput = int(input("Not possible - Where to?"))
+
+    if moveInput == bat1Pos or moveInput == bat2Pos:
+        moveInput = batLogic()
+        while moveInput == bat1Pos or moveInput == bat2Pos:
+            moveInput = batLogic()
+    elif moveInput == hole1Pos or moveInput == hole2Pos:
+        moveInput = 21
+    elif moveInput == wumpusPos:
+        moveInput = 22
+
+
     return moveInput
+
+def batLogic():
+    print("ZAP--Super Bat snatch! Elsewhereville for you!")
+    return random.randint(1,20)
+
+def checkHazards(playerPos, wumpusMap, bat1Pos, bat2Pos, hole1Pos, hole2Pos, wumpusPos):
+    warnings = ""
+
+    if wumpusPos in wumpusMap[playerPos]:
+        warnings = warnings + "You smell a wumpus" + "\n"
+
+    if bat1Pos in wumpusMap[playerPos] or bat2Pos in wumpusMap[playerPos]:
+        warnings = warnings + "You hear flapping" + "\n"
+
+    if hole1Pos in wumpusMap[playerPos] or hole2Pos in wumpusMap[playerPos]:
+        warnings = warnings + "You feel a draft" + "\n"
+
+    return warnings
 
 def shootArrow():
     print("F")
@@ -46,6 +75,7 @@ def main():
         if len(positions) == 6:
             go = False
 
+    print(playerPos, bat1Pos, bat2Pos, hole1Pos, hole2Pos, wumpusPos)
 
     print("Welcome to Hunt the Wumpus")
 
@@ -53,6 +83,7 @@ def main():
     while playerAlive == True:
         print(f"You are in room {playerPos}")
         print(f"Tunnels lead to {wumpusMap[playerPos]}")
+        print(checkHazards(playerPos, wumpusMap, bat1Pos, bat2Pos, hole1Pos, hole2Pos, wumpusPos))
         playerIn = input("Shoot, Move or Quit (S-M-Q)?")
         if playerIn == "Q":
             playerAlive = False
@@ -60,8 +91,15 @@ def main():
         elif playerIn == "S":
             shootArrow()
         elif playerIn == "M":
-            playerPos = movePlayer(playerPos, wumpusMap)
-            print(playerPos)
+            playerPos = movePlayer(playerPos, wumpusMap, bat1Pos, bat2Pos, hole1Pos, hole2Pos, wumpusPos)
+            if playerPos == 21:
+                print("YYYYIIIIEEEE... Fell in pit!")
+                print("Ha ha ha - you lose!")
+                playerAlive = False
+            if playerPos == 22:
+                print("You have been eaten by the Wumpus!")
+                print("Ha ha ha - you lose!")
+                playerAlive = False
         else:
             print("What the sigma!")
 
