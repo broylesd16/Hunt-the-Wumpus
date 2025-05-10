@@ -76,6 +76,8 @@ def missedArrow(wumpusMap, playerPos, wumpusPos):
 
 def main():
     #the map
+    #https://www.w3schools.com/python/python_dictionaries.asp
+    #This source was used for that
     wumpusMap = {
         1: [2,5,8],
         2: [1,3,10],
@@ -166,6 +168,5 @@ def main():
             print("What the sigma!")
 
 
-
-
-main()
+if __name__ == "__main__":
+    main()
