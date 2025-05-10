@@ -34,24 +34,38 @@ def checkHazards(playerPos, wumpusMap, bat1Pos, bat2Pos, hole1Pos, hole2Pos, wum
 
     return warnings
 def shootArrow(wumpusMap, playerPos, wumpusPos):
-    arrowCount = int(input("No. of rooms (1-5)?"))
+    arrowCount = int(input("No. of rooms (1-5)? "))
     arrows = []
     for i in range(arrowCount):
-        arrows.append(input("pee"))
+        arrows.append(int(input("Room #?: ")))
 
-    arrowPos = playerPos
-    for i in arrows:
-        if i not in wumpusMap[arrowPos]:
-            arrowPos = random.choice(wumpusPos[arrowPos])
+    checkArrow = playerPos
+    for arrowPos in arrows:
+        if arrowPos not in wumpusMap[checkArrow]:
+            print("Invalid path! Arrow ricochets...")
+            arrowPos = random.choice(wumpusMap[checkArrow])
+
         if arrowPos == playerPos:
+            print("OUCH! Arrow got you!")
             return 1
         if arrowPos == wumpusPos:
+            print("AHA! You got the Wumpus!")
             return 2
+        checkArrow = arrowPos
+
+    print("Missed.")
     return 3
 
 def missedArrow(wumpusMap, playerPos, wumpusPos):
     if random.random() < 0.75:
-        
+        print("The Wumpus wakes up!")
+        wumpusPos = random.choice(wumpusMap[wumpusPos])
+        if wumpusPos == playerPos:
+            print("The Wumpus has moved into your room!")
+            print("You have been eaten by the Wumpus!")
+            return False
+    return True
+
 
 def main():
     wumpusMap = {
@@ -99,20 +113,21 @@ def main():
         print(f"You are in room {playerPos}")
         print(f"Tunnels lead to {wumpusMap[playerPos]}")
         print(checkHazards(playerPos, wumpusMap, bat1Pos, bat2Pos, hole1Pos, hole2Pos, wumpusPos))
-        playerIn = input("Shoot, Move or Quit (S-M-Q)?")
+        playerIn = input("Shoot, Move or Quit (S-M-Q)?").upper()
+
         if playerIn == "Q":
             playerAlive = False
             print("Chicken!")
+
         elif playerIn == "S":
             result = shootArrow(wumpusMap, playerPos, wumpusPos)
             if result == 1:
-                print("OUCH! Arrow got you!")
                 playerAlive = False
             if result == 2:
-                print("AHA! You got the Wumpus!")
                 playerAlive = False
             if result == 3:
-                missedArrow(wumpusMap, playerPos, wumpusPos)
+                playerAlive = missedArrow(wumpusMap, playerPos, wumpusPos)
+
         elif playerIn == "M":
             playerPos = movePlayer(playerPos, wumpusMap, bat1Pos, bat2Pos, hole1Pos, hole2Pos, wumpusPos)
             if playerPos == 21:
