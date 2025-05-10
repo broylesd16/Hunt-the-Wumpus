@@ -14,7 +14,6 @@ def movePlayer(playerPos, wumpusMap, bat1Pos, bat2Pos, hole1Pos, hole2Pos, wumpu
     if moveInput == wumpusPos:
         moveInput = 22
 
-
     return moveInput
 
 def batLogic():
@@ -34,9 +33,25 @@ def checkHazards(playerPos, wumpusMap, bat1Pos, bat2Pos, hole1Pos, hole2Pos, wum
         warnings = warnings + "You feel a draft" + "\n"
 
     return warnings
+def shootArrow(wumpusMap, playerPos, wumpusPos):
+    arrowCount = int(input("No. of rooms (1-5)?"))
+    arrows = []
+    for i in range(arrowCount):
+        arrows.append(input("pee"))
 
-def shootArrow():
-    print("F")
+    arrowPos = playerPos
+    for i in arrows:
+        if i not in wumpusMap[arrowPos]:
+            arrowPos = random.choice(wumpusPos[arrowPos])
+        if arrowPos == playerPos:
+            return 1
+        if arrowPos == wumpusPos:
+            return 2
+    return 3
+
+def missedArrow(wumpusMap, playerPos, wumpusPos):
+    if random.random() < 0.75:
+        
 
 def main():
     wumpusMap = {
@@ -89,7 +104,15 @@ def main():
             playerAlive = False
             print("Chicken!")
         elif playerIn == "S":
-            shootArrow()
+            result = shootArrow(wumpusMap, playerPos, wumpusPos)
+            if result == 1:
+                print("OUCH! Arrow got you!")
+                playerAlive = False
+            if result == 2:
+                print("AHA! You got the Wumpus!")
+                playerAlive = False
+            if result == 3:
+                missedArrow(wumpusMap, playerPos, wumpusPos)
         elif playerIn == "M":
             playerPos = movePlayer(playerPos, wumpusMap, bat1Pos, bat2Pos, hole1Pos, hole2Pos, wumpusPos)
             if playerPos == 21:
