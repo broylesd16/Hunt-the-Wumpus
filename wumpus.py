@@ -10,8 +10,10 @@ def movePlayer(playerPos, wumpusMap, bat1Pos, bat2Pos, hole1Pos, hole2Pos, wumpu
         moveInput = batLogic()
         while moveInput == bat1Pos or moveInput == bat2Pos:
             moveInput = batLogic()
+
     if moveInput == hole1Pos or moveInput == hole2Pos:
         moveInput = 21
+
     if moveInput == wumpusPos:
         moveInput = 22
 
@@ -53,6 +55,7 @@ def shootArrow(wumpusMap, playerPos, wumpusPos):
         if arrowPos == playerPos:
             print("OUCH! Arrow got you!")
             return 1
+
         if arrowPos == wumpusPos:
             print("AHA! You got the Wumpus!")
             print("You win! The Wumpus is dead!")
@@ -67,10 +70,12 @@ def missedArrow(wumpusMap, playerPos, wumpusPos):
     if random.random() < 0.75:
         print("The Wumpus wakes up!")
         wumpusPos = random.choice(wumpusMap[wumpusPos])
+
         if wumpusPos == playerPos:
             print("The Wumpus has moved into your room!")
             print("You have been eaten by the Wumpus!")
             return False, wumpusPos
+
     return True, wumpusPos
 
 
@@ -141,8 +146,10 @@ def main():
             result = shootArrow(wumpusMap, playerPos, wumpusPos)
             if result == 1:
                 playerAlive = False
+
             if result == 2:
                 playerAlive = False
+
             if result == 3:
                 #if you miss the arrow missedArrow is called
                 playerAlive, wumpusPos = missedArrow(wumpusMap, playerPos, wumpusPos)
@@ -159,10 +166,12 @@ def main():
                 print("YYYYIIIIEEEE... Fell in pit!")
                 print("Ha ha ha - you lose!")
                 playerAlive = False
+
             if playerPos == 22:
                 print("You have been eaten by the Wumpus!")
                 print("Ha ha ha - you lose!")
                 playerAlive = False
+
         else:
             #This happens if you suck at games
             print("What the sigma!")
